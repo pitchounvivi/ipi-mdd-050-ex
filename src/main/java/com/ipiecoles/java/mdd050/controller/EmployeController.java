@@ -4,9 +4,12 @@ import com.ipiecoles.java.mdd050.model.Employe;
 import com.ipiecoles.java.mdd050.repository.EmployeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/employes")
@@ -26,6 +29,19 @@ public class EmployeController {
     )
     public Long countEmploye(){
         return employeRepository.count();
+    }
+
+    @RequestMapping(
+            value = "/{id}",
+            method = RequestMethod.GET,
+            produces = "application/json"
+    )
+    public Employe unEmploye (
+                @PathVariable (value = "id")
+                Long id)
+    {
+        Optional <Employe> unEmploye = employeRepository.findById(id);
+        return unEmploye.get();
     }
 
 }
