@@ -74,6 +74,7 @@ public class EmployeController {
                 Sort.Direction.fromString(sortDirection), sortProperty));
     }
 
+
     @RequestMapping(
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -85,4 +86,21 @@ public class EmployeController {
     ){
         return employeRepository.save(employe);
     }
+
+
+    @RequestMapping(
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            value = "/{id}"
+    )
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    public Employe updateEmploye(
+            @PathVariable (value = "id") Long id,
+            @RequestBody Commercial employe
+    ){
+        return employeRepository.save(employe);
+    }
+
+
 }
