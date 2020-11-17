@@ -10,9 +10,17 @@ public class HelloController {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            consumes = "text/plain",
             produces = "text/plain")
     public String hello(){
         return "hello world";
     }
+
+    @RequestMapping(
+            value = "/html",
+            method = RequestMethod.GET,
+            produces = "text/html")
+    public String helloHtml(){
+        return "<p>coucou</p>";
+    }
+
 }
