@@ -4,11 +4,9 @@ import com.ipiecoles.java.mdd050.model.Employe;
 import com.ipiecoles.java.mdd050.repository.EmployeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -37,11 +35,21 @@ public class EmployeController {
             produces = "application/json"
     )
     public Employe unEmploye (
-                @PathVariable (value = "id")
-                Long id)
+                @PathVariable (value = "id") Long id)
     {
         Optional <Employe> unEmploye = employeRepository.findById(id);
         return unEmploye.get();
     }
 
+    @RequestMapping(
+            method = RequestMethod.GET,
+            produces = "application/json"
+    )
+    public Employe parMatricule(
+            @RequestParam("matricule") String matricule
+    )
+    {
+        Employe uneMatricule = employeRepository.findByMatricule(matricule);
+        return uneMatricule;
+    }
 }
