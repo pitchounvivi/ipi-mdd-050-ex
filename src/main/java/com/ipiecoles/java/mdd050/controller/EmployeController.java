@@ -1,11 +1,13 @@
 package com.ipiecoles.java.mdd050.controller;
 
+import com.ipiecoles.java.mdd050.model.Commercial;
 import com.ipiecoles.java.mdd050.model.Employe;
 import com.ipiecoles.java.mdd050.repository.EmployeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,8 +61,8 @@ public class EmployeController {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
-            //params = {"page","size","sortProperty","sortDirection"}
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            params = {"page","size","sortProperty","sortDirection"}
     )
     public Page<Employe> listEmployes(
             @RequestParam Integer page,
@@ -68,8 +70,19 @@ public class EmployeController {
             @RequestParam String sortProperty,
             @RequestParam String sortDirection
             ){
-        return employeRepository.findAll(PageRequest.of(page, size, Sort.Direction.fromString(sortDirection), sortProperty));
-
+        return employeRepository.findAll(PageRequest.of(page, size,
+                Sort.Direction.fromString(sortDirection), sortProperty));
     }
 
+    @RequestMapping(
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public Employe createEmploye(
+            @RequestBody Commercial employe
+    ){
+        return employeRepository.save(employe);
+    }
 }
