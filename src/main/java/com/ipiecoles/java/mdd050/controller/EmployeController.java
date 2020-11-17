@@ -3,6 +3,9 @@ package com.ipiecoles.java.mdd050.controller;
 import com.ipiecoles.java.mdd050.model.Employe;
 import com.ipiecoles.java.mdd050.repository.EmployeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +45,7 @@ public class EmployeController {
     }
 
     @RequestMapping(
+            params = "matricule",
             method = RequestMethod.GET,
             produces = "application/json"
     )
@@ -53,5 +57,19 @@ public class EmployeController {
         return uneMatricule;
     }
 
-    
+    @RequestMapping(
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+            //params = {"page","size","sortProperty","sortDirection"}
+    )
+    public Page<Employe> listEmployes(
+            @RequestParam Integer page,
+            @RequestParam Integer size,
+            @RequestParam String sortProperty,
+            @RequestParam String sortDirection
+            ){
+        return employeRepository.findAll(PageRequest.of(page, size, Sort.Direction.fromString(sortDirection), sortProperty));
+
+    }
+
 }
