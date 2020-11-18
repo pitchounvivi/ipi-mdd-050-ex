@@ -91,7 +91,32 @@ public class ManagerController {
 
     }
 
-
+    //correction prof
+    ///managers/532/equipe/T00110/add
+//    @RequestMapping(method = RequestMethod.GET,
+//            value = "/{id}/equipe/{matricule}/add")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void addTechnicienToEquipe(@PathVariable Long id, @PathVariable String matricule){
+//        //Récupérer le technicien a partir du matricule
+//        Employe employe = employeRepository.findByMatricule(matricule);
+//        if(!(employe instanceof Technicien)){
+//            throw new IllegalArgumentException("L'employé de matricule " + matricule + " n'existe pas ou n'est pas un technicien !");
+//        }
+//        Technicien technicien = (Technicien)employe;
+//        if(technicien.getManager() != null){
+//            throw new IllegalArgumentException("Le technicien de matricule " + matricule + " a déjà un manager !");
+//        }
+//
+//        //Récupérer le manager à partir de son id
+//        Optional<Manager> managerOptional = managerRepository.findById(id);
+//        if(managerOptional.isEmpty()){
+//            throw new EntityNotFoundException("Le manager d'identifiant " + id + " n'existe pas !");
+//        }
+//        Manager manager = managerOptional.get();
+//        //Setter le manager au technicien et sauvegarder
+//        technicien.setManager(manager);
+//        technicienRepository.save(technicien);
+//    }
 
 
 
