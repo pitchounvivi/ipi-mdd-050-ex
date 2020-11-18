@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -128,7 +129,7 @@ public class EmployeController {
             @RequestBody Employe employe
     ){
         if (employeRepository.findByMatricule(employe.getMatricule()) != null){
-            throw new EntityNotFoundException("Il existe déjà un employé de matricule" + employe.getMatricule());
+            throw new EntityExistsException("Il existe déjà un employé de matricule" + employe.getMatricule());
         }
 
         return employeRepository.save(employe);
