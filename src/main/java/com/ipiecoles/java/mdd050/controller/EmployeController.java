@@ -50,7 +50,6 @@ public class EmployeController {
         }
 
         return unEmploye.get();
-
     }
 
 
@@ -90,7 +89,6 @@ public class EmployeController {
         }
 
         return uneMatricule;
-
     }
 
     //on peut remplacer par @GetMapping (qui contient de base method GET)
@@ -104,7 +102,14 @@ public class EmployeController {
             @RequestParam Integer size,
             @RequestParam String sortProperty,
             @RequestParam String sortDirection
-            ){
+    ){
+        if (page<0){
+            throw new IllegalArgumentException("la page doit être positif ou null");//erreur 400
+        }
+        if (size<=0 || size>=50){
+            throw new IllegalArgumentException("la taille doit être compris entre 0 et 50");//erreur 400
+        }
+
         return employeRepository.findAll(PageRequest.of(page, size,
                 Sort.Direction.fromString(sortDirection), sortProperty));
     }
@@ -143,7 +148,6 @@ public class EmployeController {
         }
 
         return employeRepository.save(employe);
-
     }
 
     @RequestMapping(
@@ -156,7 +160,8 @@ public class EmployeController {
         if(!employeRepository.existsById(id)){
             throw new EntityNotFoundException("Employé " + id + "non trouvé");
         }
-            employeRepository.deleteById(id);
+
+        employeRepository.deleteById(id);
     }
 
 }
