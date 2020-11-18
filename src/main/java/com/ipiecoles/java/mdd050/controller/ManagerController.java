@@ -1,6 +1,7 @@
 package com.ipiecoles.java.mdd050.controller;
 
 import com.ipiecoles.java.mdd050.model.Employe;
+import com.ipiecoles.java.mdd050.model.Manager;
 import com.ipiecoles.java.mdd050.model.Technicien;
 import com.ipiecoles.java.mdd050.repository.EmployeRepository;
 import com.ipiecoles.java.mdd050.repository.ManagerRepository;
@@ -76,10 +77,18 @@ public class ManagerController {
         }
 
         //récupérer le manager par son  id
+        Optional<Manager> managerOptional = managerRepository.findById(id);
 
+        if (managerOptional.isEmpty()){
+            throw new EntityNotFoundException("Le manager " + id + " n'existe pas");
+        }
+
+        Manager manager = managerOptional.get();
 
         //setter le manager au tech et save
+        technicien.setManager(manager);
 
+        technicienRepository.save(technicien);
 
     }
 
