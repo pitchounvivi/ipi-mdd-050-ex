@@ -49,4 +49,32 @@ public class ManagerController {
         //persiste la modification
         technicienRepository.save(technicien);
     }
+
+
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/{id}/equipe/{matricule}/add"
+    )
+    public void addTechnicienToEquipe(
+            @PathVariable Long id,
+            @PathVariable String matricule
+    ){
+        // récupérer le technicien à partir du matricule
+
+        //récupérer le manager par son  id
+
+
+        //setter le manager au tech et save
+
+        
+    }
+
+
+
+
+
+
+
+
+
 }
