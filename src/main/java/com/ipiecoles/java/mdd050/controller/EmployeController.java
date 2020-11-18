@@ -127,9 +127,10 @@ public class EmployeController {
     public Employe createEmploye(
             @RequestBody Employe employe
     ){
-        if(employe == null){
-            throw new EntityNotFoundException("L'employé " + employe +" non trouvé 404");//matricule == null
+        if (employeRepository.findByMatricule(employe.getMatricule()) != null){
+            throw new EntityNotFoundException("Il existe déjà un employé de matricule" + employe.getMatricule());
         }
+        
         return employeRepository.save(employe);
     }
 
