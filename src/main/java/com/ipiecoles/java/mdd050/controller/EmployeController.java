@@ -130,7 +130,7 @@ public class EmployeController {
         if (employeRepository.findByMatricule(employe.getMatricule()) != null){
             throw new EntityNotFoundException("Il existe déjà un employé de matricule" + employe.getMatricule());
         }
-        
+
         return employeRepository.save(employe);
     }
 

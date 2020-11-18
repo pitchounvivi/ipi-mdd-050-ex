@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
 @RestControllerAdvice
@@ -34,7 +35,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(PropertyReferenceException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handlePropertyReferenceException(PropertyReferenceException e){
-        return "La propriété " +e.getPropertyName()+" demandé n'existe pas";
+        return "La propriété " + e.getPropertyName() +" demandé n'existe pas";
+    }
+
+    @ExceptionHandler(EntityExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleEntityExistException(EntityExistsException e){
+        return e.getMessage();
     }
 
 }
