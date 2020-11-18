@@ -32,5 +32,8 @@ public class ManagerController {
         //set son manager à null
         Technicien technicien = technicienOptional.get();
         technicien.setManager(null);
+
+        //persiste la modification
+        technicienRepository.save(technicien);
     }
 }
