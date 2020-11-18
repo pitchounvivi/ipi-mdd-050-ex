@@ -98,10 +98,10 @@ public class EmployeController {
             params = {"page","size","sortProperty","sortDirection"}
     )
     public Page<Employe> listEmployes(
-            @RequestParam Integer page,
-            @RequestParam Integer size,
-            @RequestParam String sortProperty,
-            @RequestParam String sortDirection
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size,
+            @RequestParam(defaultValue = "matricule") String sortProperty,
+            @RequestParam(value = "sortDirection", defaultValue = "ASC") String sortDirection
     ){
         if (page<0){
             throw new IllegalArgumentException("la page doit être positif ou null");//erreur 400
