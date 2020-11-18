@@ -7,10 +7,8 @@ import com.ipiecoles.java.mdd050.repository.EmployeRepository;
 import com.ipiecoles.java.mdd050.repository.ManagerRepository;
 import com.ipiecoles.java.mdd050.repository.TechnicienRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
@@ -59,6 +57,7 @@ public class ManagerController {
             method = RequestMethod.GET,
             value = "/{id}/equipe/{matricule}/add"
     )
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addTechnicienToEquipe(
             @PathVariable Long id,
             @PathVariable String matricule
