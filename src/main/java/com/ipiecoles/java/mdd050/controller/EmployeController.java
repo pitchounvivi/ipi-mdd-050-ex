@@ -119,12 +119,10 @@ public class EmployeController {
     public Employe createEmploye(
             @RequestBody Employe employe
     ){
-        try {
-            return employeRepository.save(employe);
+        if(employe == null){
+            throw new EntityNotFoundException("L'employé " + employe +" non trouvé 404");//matricule == null
         }
-        catch (IllegalArgumentException e){
-            throw new IllegalArgumentException("Erreur 409");
-        }
+        return employeRepository.save(employe);
     }
 
     //on peut remplacer par @PutMapping (qui contient de base method PUT)
