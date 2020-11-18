@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @RestController
@@ -28,6 +29,9 @@ public class ManagerController {
 
         //récupère technicien
         Optional <Technicien> technicienOptional = technicienRepository.findById(idTechnicien);
+        if (technicienOptional.isEmpty()){
+            throw new EntityNotFoundException("Impossible de trouver technicien" + idTechnicien);
+        }
 
         //set son manager à null
         Technicien technicien = technicienOptional.get();
