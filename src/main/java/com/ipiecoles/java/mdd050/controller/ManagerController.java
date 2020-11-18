@@ -1,6 +1,8 @@
 package com.ipiecoles.java.mdd050.controller;
 
+import com.ipiecoles.java.mdd050.model.Employe;
 import com.ipiecoles.java.mdd050.model.Technicien;
+import com.ipiecoles.java.mdd050.repository.EmployeRepository;
 import com.ipiecoles.java.mdd050.repository.ManagerRepository;
 import com.ipiecoles.java.mdd050.repository.TechnicienRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ public class ManagerController {
     @Autowired
     private TechnicienRepository technicienRepository;
     private ManagerRepository managerRepository;
+    private EmployeRepository employeRepository;
 
     @RequestMapping(
             method = RequestMethod.GET,
@@ -60,13 +63,24 @@ public class ManagerController {
             @PathVariable String matricule
     ){
         // récupérer le technicien à partir du matricule
+        Employe employe = employeRepository.findByMatricule(matricule);
+
+        if (!(employe instanceof  Technicien)){
+            throw new IllegalArgumentException("L'employé de matricule " + matricule + "n'existe pas ou n'est pas un tech");
+        }
+
+        Technicien technicien = (Technicien)employe;
+
+        if (technicien.getManager() != null){
+            throw new IllegalArgumentException("Le tech de matricule " + matricule + " a déjà un manager");
+        }
 
         //récupérer le manager par son  id
 
 
         //setter le manager au tech et save
 
-        
+
     }
 
 
