@@ -113,7 +113,6 @@ public class EmployeController {
             throw new IllegalArgumentException("Le paramètre sortDirection doit être ASC ou DESC");
         }
 
-
         return employeRepository.findAll(PageRequest.of(page, size,
                 Sort.Direction.fromString(sortDirection), sortProperty));
     }
@@ -167,5 +166,8 @@ public class EmployeController {
 
         employeRepository.deleteById(id);
     }
+
+
+
 
 }
