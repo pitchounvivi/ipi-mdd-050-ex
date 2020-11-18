@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,8 +44,36 @@ public class EmployeController {
                 @PathVariable (value = "id") Long id)
     {
         Optional <Employe> unEmploye = employeRepository.findById(id);
+
+        if(unEmploye.isEmpty()){
+            throw new EntityNotFoundException("Employé " + id + "non trouvé");//erreur 404
+        }
+
         return unEmploye.get();
+
     }
+
+
+    // Autre possibilité vu durant la correction
+//    @RequestMapping(method = RequestMethod.GET,
+//            value = "/{id}",
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public Optional<Employe> getEmploye(@PathVariable(value = "id") String id){
+//        Long monId = null;
+//        try {
+//            monId = Long.parseLong(id);
+//        } catch (Exception e){
+//            //Lever une erreur 400
+//            throw new IllegalArgumentException("L'identifiant " + id + " n'est pas numérique !");
+//        }
+//        Optional<Employe> optionalEmploye = employeRepository.findById(monId);
+//        if(optionalEmploye.isEmpty()){
+//            //Erreur 404
+//            throw new EntityNotFoundException("L'employé d'identifiant " + id + " n'a pas été trouvé !");
+//        }
+//        return optionalEmploye;
+//    }
+
 
     @RequestMapping(
             params = "matricule",
@@ -53,10 +82,15 @@ public class EmployeController {
     )
     public Employe parMatricule(
             @RequestParam("matricule") String matricule
-    )
-    {
+    ){
         Employe uneMatricule = employeRepository.findByMatricule(matricule);
+
+        if(uneMatricule == null){
+            throw new EntityNotFoundException("Matricule " + matricule +" non trouvé 404");//matricule == null
+        }
+
         return uneMatricule;
+
     }
 
     //on peut remplacer par @GetMapping (qui contient de base method GET)
@@ -85,7 +119,12 @@ public class EmployeController {
     public Employe createEmploye(
             @RequestBody Employe employe
     ){
-        return employeRepository.save(employe);
+        try {
+            return employeRepository.save(employe);
+        }
+        catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Erreur 409");
+        }
     }
 
     //on peut remplacer par @PutMapping (qui contient de base method PUT)
@@ -98,19 +137,27 @@ public class EmployeController {
     @ResponseStatus(value = HttpStatus.ACCEPTED)//202
     public Employe updateEmploye(
             //@PathVariable (value = "id") Long id, non nécessaire
-            @RequestBody Employe employe
+            @RequestBody Employe employe,
+            @PathVariable (value = "id") Long id
     ){
+        if(!employeRepository.existsById(id)){
+            throw new EntityNotFoundException("Employé " + id + "non trouvé");
+        }
+
         return employeRepository.save(employe);
+
     }
 
     @RequestMapping(
             method = RequestMethod.DELETE,
-            value = "/{id}"
-    )
+            value = "/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)//204
     public void deleteEmploye(
             @PathVariable (value = "id") Long id
     ){
+        if(!employeRepository.existsById(id)){
+            throw new EntityNotFoundException("Employé " + id + "non trouvé");
+        }
             employeRepository.deleteById(id);
     }
 
