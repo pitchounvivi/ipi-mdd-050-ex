@@ -59,6 +59,7 @@ public class EmployeController {
         return uneMatricule;
     }
 
+    //on peut remplacer par @GetMapping (qui contient de base method GET)
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE,
@@ -74,33 +75,43 @@ public class EmployeController {
                 Sort.Direction.fromString(sortDirection), sortProperty));
     }
 
-
+    //on peut remplacer par @PostMapping (qui contient de base method POST)
     @RequestMapping(
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @ResponseStatus(value = HttpStatus.CREATED)
+    @ResponseStatus(value = HttpStatus.CREATED)//201
     public Employe createEmploye(
-            @RequestBody Commercial employe
+            @RequestBody Employe employe
     ){
         return employeRepository.save(employe);
     }
 
-
+    //on peut remplacer par @PutMapping (qui contient de base method PUT)
     @RequestMapping(
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE,
             value = "/{id}"
     )
-    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    @ResponseStatus(value = HttpStatus.ACCEPTED)//202
     public Employe updateEmploye(
-            @PathVariable (value = "id") Long id,
-            @RequestBody Commercial employe
+            //@PathVariable (value = "id") Long id, non nécessaire
+            @RequestBody Employe employe
     ){
         return employeRepository.save(employe);
     }
 
+    @RequestMapping(
+            method = RequestMethod.DELETE,
+            value = "/{id}"
+    )
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)//204
+    public void deleteEmploye(
+            @PathVariable (value = "id") Long id
+    ){
+            employeRepository.deleteById(id);
+    }
 
 }
