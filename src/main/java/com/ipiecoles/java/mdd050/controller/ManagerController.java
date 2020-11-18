@@ -1,6 +1,7 @@
 package com.ipiecoles.java.mdd050.controller;
 
 import com.ipiecoles.java.mdd050.model.Technicien;
+import com.ipiecoles.java.mdd050.repository.ManagerRepository;
 import com.ipiecoles.java.mdd050.repository.TechnicienRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ public class ManagerController {
 
     @Autowired
     private TechnicienRepository technicienRepository;
+    private ManagerRepository managerRepository;
 
     @RequestMapping(
             method = RequestMethod.GET,
@@ -38,7 +40,7 @@ public class ManagerController {
         if (technicien.getManager() == null){
             throw new IllegalArgumentException("Le technicien n'a pas de manager");
         }
-        if (technicien.getManager().getId().equals(idManager)){
+        if (!technicien.getManager().getId().equals(idManager)){
             throw new IllegalArgumentException("Le manager " + idManager + " n'a pas de tech " +
                     "d'id " + idTechnicien + " dans son equipe");
         }
