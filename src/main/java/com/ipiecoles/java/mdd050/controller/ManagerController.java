@@ -35,6 +35,13 @@ public class ManagerController {
 
         //set son manager à null
         Technicien technicien = technicienOptional.get();
+        if (technicien.getManager() == null){
+            throw new IllegalArgumentException("Le technicien n'a pas de manager");
+        }
+        if (technicien.getManager().getId().equals(idManager)){
+            throw new IllegalArgumentException("Le manager " + idManager + " n'a pas de tech " +
+                    "d'id " + idTechnicien + " dans son equipe");
+        }
         technicien.setManager(null);
 
         //persiste la modification
