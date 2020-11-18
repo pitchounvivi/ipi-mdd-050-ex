@@ -109,7 +109,7 @@ public class EmployeController {
         if (size<=0 || size>=50){
             throw new IllegalArgumentException("la taille doit être compris entre 0 et 50");//erreur 400
         }
-        if ("ASC".equalsIgnoreCase(sortDirection) && !"DESC".equalsIgnoreCase(sortDirection)){
+        if (!"ASC".equalsIgnoreCase(sortDirection) && !"DESC".equalsIgnoreCase(sortDirection)){
             throw new IllegalArgumentException("Le paramètre sortDirection doit être ASC ou DESC");
         }
 
